@@ -14,6 +14,8 @@ This tutorial will demonstrate how to use Pixie to:
 - Monitor resource usage by Node and Pod.
 - Easily navigate between Kubernetes resources within the Pixie UI.
 
+<YouTube youTubeId="2dFIpiBryu8"/>
+
 ## Prerequisites
 
 1. You will need a Kubernetes cluster with Pixie installed. If you do not have a cluster, you can create a minikube cluster and install Pixie using one of our [install guides](/installing-pixie/install-guides/).
@@ -106,7 +108,7 @@ by clicking the bottom box.
 
 ## Related Scripts
 
-This tutorial demonstrated a few of Pixie's [community scripts](https://github.com/pixie-labs/pixie/tree/main/src/pxl_scripts). For more insight into your infrastructure, check out the following scripts:
+This tutorial demonstrated a few of Pixie's [community scripts](https://github.com/pixie-io/pixie/tree/main/src/pxl_scripts). For more insight into your infrastructure, check out the following scripts:
 
 #### Resource usage by Kubernetes object
 

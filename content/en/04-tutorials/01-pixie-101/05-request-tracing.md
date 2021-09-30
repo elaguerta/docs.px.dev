@@ -19,6 +19,8 @@ This tutorial will demonstrate how to use Pixie to:
 
 If you're interested in troubleshooting HTTP latency, check out the [Service Performance](/tutorials/pixie-101/service-performance) tutorial.
 
+<YouTube youTubeId="Gl0so4rbwno"/>
+
 ## Prerequisites
 
 1. You will need a Kubernetes cluster with Pixie installed. If you do not have a cluster, you can create a minikube cluster and install Pixie using one of our [install guides](/installing-pixie/install-guides/).
@@ -135,7 +137,7 @@ If services are backed by multiple pods, it is worth inspecting the individual p
 
 ## Related Scripts
 
-This tutorial demonstrated a few of Pixie's [community scripts](https://github.com/pixie-labs/pixie/tree/main/src/pxl_scripts). To see full body requests for a specific protocol, check out the following scripts:
+This tutorial demonstrated a few of Pixie's [community scripts](https://github.com/pixie-io/pixie/tree/main/src/pxl_scripts). To see full body requests for a specific protocol, check out the following scripts:
 
 - [`px/http_data`](https://work.withpixie.ai/script/http_data) shows the most recent HTTP/2 requests in the cluster.
 - [`px/dns_data`](https://work.withpixie.ai/script/dns_data) shows the most recent DNS requests in the cluster.

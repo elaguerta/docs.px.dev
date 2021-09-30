@@ -15,24 +15,22 @@ Get Pixie fully managed with [Pixie Community Cloud](/installing-pixie/install-g
 
 - Ensure that your cluster supports Pixie creating and using [PersistentVolumes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/).
 
+- Pixie interacts with the Linux kernel to install BPF programs to collect telemetry data. In order to install BPF programs, Pixie [`vizier-pem-*`](/about-pixie/what-is-pixie/#architecture) pods require [privileged access](https://github.com/pixie-io/pixie/blob/main/k8s/vizier/bootstrap/pod_security_policy.yaml).
+
 ## 1. Deploy Pixie Cloud
 
 <Alert variant="outlined" severity="info">
   Pixie also offers a free account with Pixie Community Cloud to make getting started even easier and faster. To get Pixie Cloud, check out the community cloud <a href="https://docs.px.dev/installing-pixie/install-guides/community-cloud-for-pixie">Install Guide</a>.
 </Alert>
 
-<Alert variant="outlined" severity="info">
-  Self-managed Pixie Cloud has been tested on GKE only.
-</Alert>
-
 <Alert variant="outlined" severity="warning">
   There is a known issue with login on self-managed Pixie Cloud on Safari and Firefox. For now, use Chrome.
 </Alert>
 
-1. Clone the [Pixie repo](https://github.com/pixie-labs/pixie).
+1. Clone the [Pixie repo](https://github.com/pixie-io/pixie).
 
 ```bash
-git clone https://github.com/pixie-labs/pixie.git
+git clone https://github.com/pixie-io/pixie.git
 cd pixie
 ```
 
@@ -148,9 +146,6 @@ To deploy Pixie using the CLI:
 </Alert>
 
 ``` bash
-# List Pixie deployment options.
-px deploy --help
-
 # Deploy the Pixie Platform in your K8s cluster (No OLM present on cluster).
 px deploy --dev_cloud_namespace plc
 
@@ -193,4 +188,4 @@ If you select this option, each of your Pixie deployments will point to the same
 
 ## Get Help
 
-Please reach out on our [Community Slack](https://slackin.px.dev/) or file an issue on [GitHub](https://github.com/pixie-labs/pixie/issues).
+Please reach out on our [Community Slack](https://slackin.px.dev/) or file an issue on [GitHub](https://github.com/pixie-io/pixie/issues).

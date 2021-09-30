@@ -54,7 +54,7 @@ In this demo, we'll deploy Dale Hamel's bpftrace [TCP retransmit tool](https://g
 
 ### Running the PxL Script in the Live UI
 
-We've incorporated this trace into a PxL script called [`px/tcp_retransmits`](https://github.com/pixie-labs/pixie/tree/main/src/pxl_scripts/px/tcp_retransmits). To run this script:
+We've incorporated this trace into a PxL script called [`px/tcp_retransmits`](https://github.com/pixie-io/pixie/tree/main/src/pxl_scripts/px/tcp_retransmits). To run this script:
 
 - Open up Pixie's [Live View](https://work.withpixie.ai) and select your cluster.
 - Select the `px/tcp_retransmits` script using the drop down `script` menu or with Pixie Command. Pixie Command can be opened with the `ctrl/cmd+k` keyboard shortcut.
@@ -170,30 +170,23 @@ If you'd like to filter the results to a particular service, modify line 67 to i
 df = df[px.contains(df['dst'], 'sock-shop')]
 ```
 
+### Tracepoint status
+
+Run `px/tracepoint_status` to see the information about all of the tracepoints running on your cluster. The `STATUS` column can be used to debug why a tracepoint fails to deploy.
+
 ### Running other bpftrace programs
 
-With a few modifications to obey the Rules listed above, all of the TCP [bpftrace](https://github.com/iovisor/bpftrace) programs are known to work with Pixie:
+The following [bpftrace](https://github.com/iovisor/bpftrace) programs are available today for use in Pixie:
 
-- `tcpaccept.bt`
-- `tcpconnect.bt`
-- `tcpdrop.bt`
-- `tcplife.bt`
-- `tcpretrans.bt`
-- `tcpsynbl.bt`
+- `capable.bt`: use the `pxbeta/capable` script
+- `dcsnoop.bt`: use the `pxbeta/dc_snoop` script.
+- `mdflush.bt`: use the `pxbeta/md_flush` script.
+- `naptime.bt`: use the `pxbeta/nap_time` script.
+- `oomkill.bt`: use the `pxbeta/oom_kill` script.
+- `syncsnoop.bt`: use the `pxbeta/sync_snoop` script.
+- `tcpdrop.bt`: use the `px/tcp_drops` script.
+- `tcpretrans.bt`: use the `px/tcp_retransmits` script.
 
-Based on a quick visual inspection of the code, the following programs should theoretically work with modifications, but have not yet been tested:
-
-- `biosnoop.bt`
-- `dcsnoop.bt`
-- `execsnoop.bt`
-- `opensnoop.bt`
-- `statsnoop.bt`
-- `syncsnoop.bt`
-- `capable.bt`
-- `loads.bt`
-- `mdflush.bt`
-- `naptime.bt`
-- `oomkill.bt`
-- `writeback.bt`
+Many other bpftrace programs can work with Pixie. Some may require a few modifications to obey the rules listed above.
 
 If you have any questions about this feature or how to incorporate your own bpftrace code, we'd be happy to help out over on our [Slack](https://slackin.px.dev/).

@@ -1,5 +1,5 @@
 ---
-title: "Dynamic Logging In Go"
+title: "Dynamic Logging In Go (Alpha)"
 metaTitle: "Tutorials | Collecting Custom Data | Dynamic Structured Logging In Go"
 metaDescription: "Simple tutorial to show how dynamic structured logging works in Go using eBPF"
 order: 2
@@ -8,7 +8,8 @@ redirect_from:
     - /using-pixie/use-cases/code-tracing/
 ---
 This is a simple demo showing the ability of Pixie to add dynamic structured logs into
-Go binaries deployed in production environments. This capability allows debugging Go binaries in production without the need
+Go binaries deployed in production environments. This capability allows one to debug Go
+binaries in production without the need
 to instrument the source code with additional log statements, recompile, and redeploy.
 
 A simple overview of this functionality is show here:
@@ -17,11 +18,14 @@ A simple overview of this functionality is show here:
 <svg title='Dynamic Structured Logging in Go' src='dynamic_logs.svg' />
 :::
 
-In a legacy systems a modify, compile, deploy cycle is required to get visibility into the binary
+In a legacy systems a modify-compile-deploy cycle is required to get visibility into the binary
 if the appropriate log lines are missing. Pixie allows
-you to dynamically capture function arguments, latency, etc., without this slow
-process. Since we use new kernel technologies like eBPF we can safely insert these logs without stopping
-execution of you program with minimal overhead.
+you to dynamically capture function arguments, return values and latency, without this slow
+process. Since we use new kernel technologies like eBPF, we can safely insert these logs without stopping
+execution of you program, and with minimal overhead.
+
+Note: Dynamic logging is an alpha feature.
+[Limitations](/tutorials/custom-data/dynamic-go-logging/#requirements-and-limitations) are listed at the end of this page.
 
 ## Tutorial Overview
 
@@ -34,7 +38,7 @@ execution of you program with minimal overhead.
 2. Clone the `pixie` repo to get the relevant files.
 
 ```bash
-git clone https://github.com/pixie-labs/pixie-demos.git
+git clone https://github.com/pixie-io/pixie-demos.git
 cd pixie-demos/simple-gotracing
 ```
 
@@ -89,7 +93,7 @@ func computeE(iterations int64) float64 {
 ```
 
 The function computeE is called by an HTTP handler. Let's say we want to quickly access the arguments to the `computeE`
-function, and it's latency. We can use the provided [capture_args.pxl](https://github.com/pixie-labs/pixie-demos/blob/main/simple-gotracing/capture_args.pxl)
+function, and it's latency. We can use the provided [capture_args.pxl](https://github.com/pixie-io/pixie-demos/blob/main/simple-gotracing/capture_args.pxl)
 script. The complete script has code to programmatically insert the log
 and capture data for a time period. However, the actual function that captures this data is straightforward:
 
@@ -220,10 +224,31 @@ func (s *service) Authorise(amount float32) (Authorisation, error) {}
 @pxtrace.probe("github.com/microservices-demo/payment/payment.(*service).Authorise")
 ```
 
-### Debug symbols
+## Requirements & Limitations
 
-Note that Dynamic Go Logging works using debug symbols. By default, go build compiles your program with debug symbols, and is compatible with Dynamic Go Logging. However, if you compile with -ldflags '-w' or strip the debug symbols after compiling, then you will not be able use Dynamic Go Logging. Additionally, if your build is optimized with inlining (-gcflags '-l'), certain functions won't be traceable. For more info see the [golang documentation](https://golang.org/doc/gdb#Introduction).
+Dynamic logging is an alpha feature. It is currently only supports logging of Go binaries.
 
-## Known Issues
+### Requirements
+
+Dynamic Go Logging works using [debug information](/reference/admin/debug-info). By default, `go build` compiles your program with debug information and is compatible with Dynamic Go Logging. However, if you compile with -ldflags '-w -s' or strip the debug symbols after compiling, then you will not be able use Dynamic Go Logging.
+
+Additionally, Dynamic logging works for Golang versions up to 1.16 only (the go compiler for 1.17 changed the calling convention, and the Dynamic Logging feature has not yet been updated to support those changes).
+
+### Limitations
+
+Dynamic Logging can currently be used to trace only certain types of arguments and return values:
+
+| Value type (argument or return value)     | Supported?                         |
+| :---------------------------------------- | :--------------------------------- |
+| Primitive types                           | Yes.                               |
+| Strings                                   | Yes. Truncated after 23 characters |
+| Arrays                                    | No.                                |
+| Structs                                   | Partial. Struct members that are other primitive types or other structs are traced. Pointers to other types are not followed. Strings inside structs are not supported. |
+| Interfaces                                | Partial. Struct data is printed out. If more than 128 types implement the same interface, then the interface is not traced. |
+
+If your build is optimized with inlining (-gcflags '-l'), certain functions won't be traceable.
+For more info see the [golang documentation](https://golang.org/doc/gdb#Introduction).
+
+### Known Issues
 
 Note that there is a known bug in which re-running the script after modifying the `probe_func` definition will cause the tracepoint to fail to deploy. To get around this bug, whenever you modify the `probe_func` definition, please rename the `table_name` (and update the `table_name` in the `df = px.DataFrame(table_name)` line as well.

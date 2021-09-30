@@ -13,6 +13,8 @@ This tutorial will demonstrate how to use Pixie to see:
 - The flow of DNS requests within your cluster.
 - TCP drops and TCP retransmits across your cluster.
 
+<YouTube youTubeId="qIxzIPBhAUI"/>
+
 ## Prerequisites
 
 1. You will need a Kubernetes cluster with Pixie installed. If you do not have a cluster, you can create a minikube cluster and install Pixie using one of our [install guides](/installing-pixie/install-guides/).
@@ -157,7 +159,7 @@ for a different view of the graph.
 
 ## Related Scripts
 
-This tutorial demonstrated three of Pixie's [community scripts](https://github.com/pixie-labs/pixie/tree/main/src/pxl_scripts). For more insight into your network, check out the following scripts:
+This tutorial demonstrated three of Pixie's [community scripts](https://github.com/pixie-io/pixie/tree/main/src/pxl_scripts). For more insight into your network, check out the following scripts:
 
 - [`px/dns_data`](https://work.withpixie.ai/script/dns_data) shows the most recent DNS requests in your cluster, including the full request and response bodies.
 - [`px/tcp_retransmits`](https://work.withpixie.ai/script/tcp_retransmits) graphs the TCP retransmission counts across your cluster. Don't forget to click the RUN button.

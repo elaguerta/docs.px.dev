@@ -20,6 +20,8 @@ This tutorial will demonstrate how to use Pixie to see:
 
 If you're interested in troubleshooting HTTP errors, check out the [Request Tracing](/tutorials/pixie-101/request-tracing) tutorial.
 
+<YouTube youTubeId="Rex0yz_5vwc"/>
+
 ## Prerequisites
 
 1. You will need a Kubernetes cluster with Pixie installed. If you do not have a cluster, you can create a minikube cluster and install Pixie using one of our [install guides](/installing-pixie/install-guides/).
@@ -165,7 +167,7 @@ Let's look at latency by logical service endpoint:
 
 ## Related Scripts
 
-This tutorial demonstrated a few of Pixie's [community scripts](https://github.com/pixie-labs/pixie/tree/main/src/pxl_scripts). For more insight into the health of your services, check out the following scripts:
+This tutorial demonstrated a few of Pixie's [community scripts](https://github.com/pixie-io/pixie/tree/main/src/pxl_scripts). For more insight into the health of your services, check out the following scripts:
 
 - [`px/pod`](http://work.withpixie.ai/script/pod) shows a CPU flamegraph for the pod to see how your Go/C++/Rust applications are spending their time. To learn more about how use Pixie for application profiling, check out the [Profiling with Flamegraphs](/tutorials/pixie-101/profiler) tutorial.
 - [`px/services`](http://work.withpixie.ai/script/services) shows LET over time for all services in the given namespace, along with a  service graph.
